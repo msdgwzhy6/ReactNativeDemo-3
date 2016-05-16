@@ -1,2 +1,2 @@
 # ReactNativeDemo
-* 项目运行，导入node_modules文件
+* 项目运行前须添加node_modules文件
