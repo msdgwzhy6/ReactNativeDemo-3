@@ -1,2 +1,2 @@
 # ReactNativeDemo
-* 缺少node_modules文件
+* 项目运行，导入node_modules文件
