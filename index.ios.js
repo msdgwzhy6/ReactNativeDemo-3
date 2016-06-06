@@ -5,18 +5,19 @@
  */
 
 import React, { Component } from 'react';
-import Root from './js_files/Root'
+import Root from './files/sections/Root'
 
 import {
-  AppRegistry
+    AppRegistry,
 } from 'react-native';
 
 class ReactNativeDemo extends Component {
-  render(){
-    return(
-      <Root/>
+  render() {
+    return (
+        <Root />
     );
   }
 }
+
 
 AppRegistry.registerComponent('ReactNativeDemo', () => ReactNativeDemo);

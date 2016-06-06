@@ -1,23 +1,23 @@
 
 import React, {Component} from 'react';
-import BannerDetail from './BannerDetail';
-import Button from '../src/Button';
+import BannerDetail from '../home/BannerDetail';
+//自定义组件
+import Button from '../../src/Button';
+//插件
+import Toast from 'react-native-root-toast';
 
 import {
     AppRegistry,
     StyleSheet,
     Text,
     View,
-    ActivityIndicatorIOS,
-    Image,
-    NavigatorIOS,
     ListView,
     TouchableHighlight,
-    TouchableOpacity
+    ActivityIndicatorIOS,
+    Image
 } from 'react-native';
 
-/*--  首页页面组件 --*/
-class HomeScene extends Component {
+export default class ListSence extends Component {
 
     constructor(props) {
         super(props);
@@ -26,7 +26,7 @@ class HomeScene extends Component {
                 rowHasChanged: (row1, row2) => row1 !== row2,  //如果两次的数据不同的话，告诉数据源该数据发生了改变
             }),
             loaded: false,
-            haha: null
+            haha: null,
         };
     }
 
@@ -39,13 +39,9 @@ class HomeScene extends Component {
                     loaded: true,
                 });
             })
-            .done()
-    }
-
-    componentWillUnmount() {
-        // 如果存在this.timer，则使用clearTimeout清空。
-        // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
-        this.timer && clearTimeout(this.timer);
+            .catch((error) => {
+                console.warn(error);
+            });
     }
 
     render() {
@@ -54,7 +50,7 @@ class HomeScene extends Component {
             contents = (
                 <View style={styles.loading}>
                     <Text style={styles.loadingText}>Loading</Text>
-                    <ActivityIndicatorIOS />
+                    <ActivityIndicatorIOS/>
                 </View>
             )
         } else {
@@ -66,16 +62,12 @@ class HomeScene extends Component {
             )
         }
         return (
-            <View style={styles.container_scene}>
-                {contents}
+            <View style={{flex: 1}}>
+                <View style={styles.container_scene}>
+                    {contents}
+                </View>
             </View>
         );
-    }
-
-    componentWillUnmount() {
-        // 如果存在this.timer，则使用clearTimeout清空。
-        // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
-        this.timer && clearTimeout(this.timer);
     }
 
     //ListView行样式
@@ -86,16 +78,28 @@ class HomeScene extends Component {
                 underlayColor="rgba(34,26,38,0.1)"      //设置点击后的背景颜色
                 onPress={() => {
                     this.props.navigator.push({
-                        title: item.photo_abstract,
+                        //title: item.photo_abstract,
                         component: BannerDetail,
-                        passProps: {                    //传参到下一个界面
+                        //使用Navigator进行传值
+                        params: {
                             url: item.link_url,
+                            title: item.photo_abstract,
                             valueFromBannerDetail(value) {          //回调传值
                                 _this.setState({
                                     haha: value
                                 });
+                                console.log(value);
                             }
                         }
+                        /*-- 使用NavigatorIOS进行传值时调用
+                        passProps: {                    //传参到下一个界面
+                            url: item.link_url,
+                           valueFromBannerDetail(value) {          //回调传值
+                                _this.setState({
+                                    haha: value
+                                });
+                            }
+                         }--*/
                      })
                 }}>
                 <View >
@@ -129,11 +133,27 @@ class HomeScene extends Component {
     };
 
     fetchData = (enableCallBack) => {
-        this.timer = setTimeout(() => {
-            enableCallBack();
-        },3000);
+        Toast.show('test!', {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.BOTTOM,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            delay: 0,
+            onShow: () => {
+                console.log(1);
+            },
+            onShown: () => {
+                console.log(2);
+            },
+            onHide: () => {
+                console.log(3);
+            },
+            onHidden: () => {
+                console.log(4);
+            }
+        });
     }
-    
 }
 
 const styles = StyleSheet.create({
@@ -143,7 +163,9 @@ const styles = StyleSheet.create({
     },
     container_scene: {
         flex: 1,
-        marginTop: 64
+        marginTop: 64,
+        marginBottom: 49,
+        backgroundColor: 'white'
     },
     loading: {
         flex: 1,
@@ -157,14 +179,15 @@ const styles = StyleSheet.create({
     },
     listView: {
         paddingTop: 0,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: 'white',
     },
     cellBorder: {
         height: 1,
         marginLeft: 10,
         backgroundColor: '#EAEAEA',
-    }
+    },
+    contentContainer: {
+        backgroundColor: 'white',
+    },
 
 });
-
-module.exports = HomeScene;
