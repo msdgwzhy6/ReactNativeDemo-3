@@ -14,7 +14,7 @@ import {
 class ReactNativeDemo extends Component {
   render() {
     return (
-        <Root />
+        <Root/>
     );
   }
 }

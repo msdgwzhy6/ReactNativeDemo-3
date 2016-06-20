@@ -20,7 +20,6 @@ export default class BussinessButton extends Component {
     }
 
     render() {
-        console.log(parseFloat(this.props.index));
         var image;
         switch (parseFloat(this.props.index)) {
             case 0:
