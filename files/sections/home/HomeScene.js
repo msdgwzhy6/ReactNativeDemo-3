@@ -43,7 +43,7 @@ export default class HomeScene extends Component {
     //在render前调用
     //业务逻辑处理都应该放在这里,如对state的操作等
     componentWillMount() {   //React会在react-native组件加载完成后，使用componentDidMount方法发送请求
-        fetch('http://182.254.231.237/interface/banner.php?action=getBanner')
+        fetch('http://119.29.87.127/interface/banner.php?action=getBanner')
             .then((response) => response.json())
             .then((jsondata) => {
                 this.setState({
